@@ -1,0 +1,270 @@
+/*
+ * Print stylesheet for the QIBING passenger list. Plain CSS, no Tailwind.
+ * Measurements are taken from the original Word form (US Letter, 0.5in margins,
+ * table columns 4020/2095/1939/1590/1146 twips). All positions are in mm on a
+ * 215.9 x 279.4 mm canvas. On A4 the canvas is centred on the sheet.
+ */
+
+@font-face { font-family: "Carlito"; src: url("/fonts/carlito-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "Carlito"; src: url("/fonts/carlito-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "Tinos"; src: url("/fonts/tinos-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "DejaVu Sans"; src: url("/fonts/dejavu-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: block; }
+
+.qb-print,
+.qb-print * {
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.qb-print {
+  font-family: Calibri, Carlito, Arial, sans-serif;
+  color: #000;
+  font-size: 11pt;
+  line-height: 1.15;
+}
+
+/* ---------------------------------------------------------------- sheet and canvas */
+.qb-sheet {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  page-break-after: always;
+  break-after: page;
+}
+.qb-paper-letter { width: 215.9mm; height: 279.4mm; }
+.qb-paper-a4 { width: 210mm; height: 297mm; }
+.qb-list:last-child .qb-sheet:last-child { page-break-after: auto; break-after: auto; }
+
+.qb-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 215.9mm;
+  height: 279.4mm;
+}
+.qb-paper-a4 .qb-canvas { left: -2.95mm; top: 8.8mm; }
+
+/* ---------------------------------------------------------------- letterhead (Word header) */
+.qb-lh-short {
+  position: absolute;
+  left: 12mm;
+  width: 65mm;
+  top: 9.4mm;
+  text-align: center;
+  font-family: Arial, Helvetica, "DejaVu Sans", sans-serif;
+  font-size: 8pt;
+  font-weight: 700;
+}
+.qb-lh-logo {
+  position: absolute;
+  left: 4.4mm;
+  top: 13.8mm;
+  width: 81.3mm;
+  height: 39.2mm;
+  object-fit: contain;
+  object-position: left center;
+}
+.qb-lh-reg {
+  position: absolute;
+  left: 12.7mm;
+  top: 54.4mm;
+  font-family: "Times New Roman", Tinos, Times, serif;
+  font-size: 11pt;
+}
+.qb-lh-address {
+  position: absolute;
+  left: 101.6mm;
+  top: 11.3mm;
+  font-family: Verdana, "DejaVu Sans", Geneva, sans-serif;
+  font-size: 11pt;
+  line-height: 5.1mm;
+}
+.qb-lh-cell { margin-top: 2.6mm; }
+.qb-lh-email { margin-top: 3.6mm; }
+.qb-lh-email span { font-size: 8pt; }
+.qb-rule {
+  position: absolute;
+  left: 12.7mm;
+  width: 190.5mm;
+  top: 60.2mm;
+  border-top: 0.75pt solid #000;
+}
+
+/* ---------------------------------------------------------------- watermark (Word header, behind the text) */
+.qb-wm-img {
+  position: absolute;
+  left: 27.2mm;
+  top: 103.4mm;
+  width: 147mm;
+  height: 116.2mm;
+  object-fit: fill; /* the Word form stretches the logo slightly to fill this area */
+  opacity: 0.28;
+  filter: saturate(0.75);
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------------- page 1 body */
+.qb-flow {
+  position: absolute;
+  left: 12.7mm;
+  width: 190.5mm;
+  top: 64.3mm;
+  z-index: 1;
+}
+.qb-title-line {
+  position: relative;
+  height: 6.4mm;
+  text-align: center;
+}
+.qb-title {
+  font-size: 14pt;
+  font-weight: 700;
+  line-height: 6.4mm;
+}
+.qb-date {
+  position: absolute;
+  right: 3mm;
+  top: 1.6mm;
+  font-size: 9pt;
+}
+.qb-contact {
+  text-align: center;
+  font-size: 9pt;
+  height: 5.2mm;
+}
+.qb-info {
+  display: flex;
+  gap: 5mm;
+  align-items: center;
+  height: 4mm;
+  margin: 2.5mm 0 5.1mm;
+  font-size: 9pt;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.qb-blank {
+  display: inline-block;
+  border-bottom: 0.5pt solid #000;
+  height: 3mm;
+  vertical-align: baseline;
+}
+
+/* ---------------------------------------------------------------- table */
+.qb-table {
+  width: 190.5mm;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: transparent;
+}
+.qb-w-name { width: 70.9mm; }
+.qb-w-from { width: 37mm; }
+.qb-w-dest { width: 34.2mm; }
+.qb-w-phone { width: 28mm; }
+.qb-w-amount { width: 20.4mm; }
+
+.qb-table th,
+.qb-table td {
+  border: 0.5pt solid #000;
+  padding: 0 1.9mm;
+  background: transparent;
+}
+.qb-table th {
+  height: 9.8mm;
+  font-size: 11pt;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: top;
+  line-height: 1.15;
+  padding-top: 0.6mm;
+}
+.qb-row td { height: 4.04mm; }
+.qb-row-child td { height: 3.9mm; }
+.qb-cell {
+  height: 3.8mm;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  word-break: break-word;
+}
+.qb-fit-1 { font-size: 9pt; white-space: nowrap; }
+.qb-fit-2 { font-size: 7.5pt; white-space: nowrap; }
+.qb-fit-3 { font-size: 6pt; white-space: nowrap; }
+.qb-fit-4 { font-size: 5pt; white-space: normal; line-height: 1.05; }
+
+.qb-child-head td {
+  height: 10mm;
+  font-size: 11pt;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: top;
+  padding-top: 0.6mm;
+  line-height: 1.15;
+}
+
+/* ---------------------------------------------------------------- footer line and page number */
+.qb-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6.5mm;
+  padding: 0 1mm;
+  font-size: 12pt;
+}
+.qb-filled {
+  display: inline-block;
+  min-width: 35mm;
+  border-bottom: 0.5pt solid #000;
+  line-height: 1.05;
+}
+.qb-page-no {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 256.6mm;
+  text-align: center;
+  font-size: 11pt;
+}
+.qb-ref {
+  position: absolute;
+  right: 12.7mm;
+  top: 258mm;
+  font-size: 6pt;
+  color: #444;
+}
+.qb-draft {
+  position: absolute;
+  top: 3mm;
+  right: 12.7mm;
+  font-size: 9pt;
+  font-weight: 700;
+  border: 1pt solid #000;
+  padding: 0.5mm 2mm;
+}
+
+/* ---------------------------------------------------------------- screen preview */
+@media screen {
+  .qb-preview { background: #6b7280; min-height: 100vh; padding: 72px 0 24px; }
+  .qb-preview .qb-print { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .qb-preview .qb-list { display: flex; flex-direction: column; gap: 16px; }
+  .qb-preview .qb-sheet { zoom: var(--qb-zoom, 1); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35); }
+  .qb-toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+    background: #14532d; color: #fff; font-family: Inter, system-ui, sans-serif;
+  }
+  .qb-toolbar button, .qb-toolbar a {
+    min-height: 44px; padding: 0 16px; border-radius: 8px; font-size: 16px; font-weight: 600;
+    display: inline-flex; align-items: center; text-decoration: none; cursor: pointer;
+  }
+  .qb-toolbar .qb-primary { background: #fff; color: #14532d; border: none; }
+  .qb-toolbar .qb-secondary { background: transparent; color: #fff; border: 2px solid #fff; }
+  .qb-toolbar .qb-pages { margin-left: auto; font-size: 14px; }
+}
+
+@media print {
+  html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; }
+  .qb-toolbar, .no-print { display: none !important; }
+  .qb-preview { padding: 0; background: #fff; }
+  .qb-sheet { zoom: 1 !important; box-shadow: none; }
+}
